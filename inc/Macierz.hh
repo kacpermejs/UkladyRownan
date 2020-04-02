@@ -11,38 +11,31 @@
  *  i jakie ma glowne cechy.
  */
 class MacierzKw {
-  Wektor tab[ROZMIAR]; //2. propozycja, zalecana
+    Wektor Tab[ROZMIAR]; //2. propozycja, zalecana
 public:
-  MacierzKw();
-  MacierzKw(const Wektor tab[]);
-  MacierzKw(Wektor A, Wektor B, Wektor C);
-  
-  double wyznacznik();// rozwiniecje laplace'a, gaussa, sarrusa
-  // double wyznacznikGauss(); double wyznacznik(metoda met = Gauss) <- enum
-  int rzad();
+    MacierzKw();
+    MacierzKw(const Wektor Tab[]);
+    MacierzKw(Wektor A, Wektor B, Wektor C);
 
-  const MacierzKw & transponuj() const;
-  void transponuj();
+    double wyznacznik();// rozwiniecje laplace'a, gaussa, sarrusa
+    // double wyznacznikGauss(); double wyznacznik(metoda met = Gauss) <- enum
+    int rzad();
 
-  const MacierzKw & odwroc() const;
-  void odwroc();
-  
-  const MacierzKw & operator*(const MacierzKw & M2);
-  const MacierzKw & operator+(const MacierzKw & M2);
-  const MacierzKw & operator-(const MacierzKw & M2);
-  const MacierzKw & operator*(double l);
-  const Wektor & operator*(const Wektor & W2);
+    const MacierzKw & transponuj() const;
+    void transponuj();
 
-  const Wektor & operator[] (int index) const;//wg. 2. propozycji
-  Wektor & operator[] (int index); // M[2][0] - zerowy element, drugiego wektora
+    const MacierzKw & odwroc() const;
+    void odwroc();
 
-  const double & operator() (int ind1, int ind2) const;//wg. 1. propozycji
-  double & operator() (int ind1, int ind2); //M(2,0)
+    const MacierzKw & operator*(const MacierzKw & M2);
+    const MacierzKw & operator+(const MacierzKw & M2);
+    const MacierzKw & operator-(const MacierzKw & M2);
+    const MacierzKw & operator*(double l);
+    const Wektor & operator*(const Wektor & W2);
 
-  const Wektor & zwroc_kolumne(int ind); //dla interpretacji wierszowej
-  void zmien_kolumne(int ind, Wektor W); //dla interpretacji wierszowej
+    const Wektor & operator[] (int index) const { return this->Tab[index]; }
+    Wektor & operator[] (int index) { assert(index>=0); return this->Tab[index]; }
 
-    
 };
 
 
@@ -51,7 +44,7 @@ public:
  * danych akceptuje. Jakie jest znaczenie parametrow itd.
  * Szczegoly dotyczace zalecen realizacji opisow mozna
  * znalezc w pliku:
- *    ~bk/edu/kpo/zalecenia.txt 
+ *    ~bk/edu/kpo/zalecenia.txt
  */
 std::istream& operator >> (std::istream &Strm, MacierzKw &Mac);
 
@@ -60,7 +53,7 @@ std::istream& operator >> (std::istream &Strm, MacierzKw &Mac);
  * danych akceptuje. Jakie jest znaczenie parametrow itd.
  * Szczegoly dotyczace zalecen realizacji opisow mozna
  * znalezc w pliku:
- *    ~bk/edu/kpo/zalecenia.txt 
+ *    ~bk/edu/kpo/zalecenia.txt
  */
 std::ostream& operator << (std::ostream &Strm, const MacierzKw &Mac);
 

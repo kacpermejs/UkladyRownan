@@ -2,6 +2,8 @@
 #define UKLADROWNANLINIOWYCH_HH
 
 #include <iostream>
+#include "Wektor.hh"
+#include "Macierz.hh"
 
 
 /*
@@ -9,14 +11,14 @@
  *  i jakie ma glowne cechy.
  */
 class UkladRownanLiniowych {
-    Macierz A;
+    MacierzKw A;
     Wektor B;
 public:
     UkladRownanLiniowych();
-    UkladRownanLiniowych(Macierz AA, Wektor BB);
+    UkladRownanLiniowych(MacierzKw AA, Wektor BB);
 
-    Macierz zworc_macierz();
-    void zmien_macierz(Macierz MM);
+    MacierzKw zworc_macierz();
+    void zmien_macierz(MacierzKw MM);
     /*analogicznie dla wektora */
 
     Wektor oblicz();

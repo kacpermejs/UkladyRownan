@@ -45,7 +45,7 @@ class Wektor {
     inline double & operator[] (int index) { assert(index>=0); return this->Tab[index]; }
 };
 
-
+ inline Wektor operator *(double l, Wektor W2) { return Wektor(W2)*l; }
 /*
  * To przeciazenie trzeba opisac. Co ono robi. Jaki format
  * danych akceptuje. Jakie jest znaczenie parametrow itd.
