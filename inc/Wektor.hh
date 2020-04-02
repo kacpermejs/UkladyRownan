@@ -4,6 +4,7 @@
 #include "rozmiar.h"
 #include <iostream>
 #include <cassert>
+#include <cmath>
 
 
 /*
@@ -21,11 +22,16 @@ class Wektor {
     Wektor(double tablica[]);
 
     Wektor & operator += (const Wektor & W2); //W1 += W2  , W1 += W3 += W4
-    const Wektor & operator + (const Wektor & W2) const; //W1 + W2
-    const Wektor & operator - (const Wektor & W2) const;
+    Wektor & operator -= (const Wektor & W2);
+    Wektor & operator *= (double l);
+    Wektor & operator /= (double l);
+
     double operator * (const Wektor & W2) const; //skalarnie
-    const Wektor & operator * (double l) const; // W1 * 2
-    const Wektor & operator / (double l) const; // W1 / 2
+
+    inline const Wektor & operator + (const Wektor & W2) const { return Wektor(*this)+=W2; } //W1 + W2
+    inline const Wektor & operator - (const Wektor & W2) const { return Wektor(*this)-=W2; }
+    inline const Wektor & operator * (double l) const { return Wektor(*this)*=l; } // W1 * 2
+    inline const Wektor & operator / (double l) const { return Wektor(*this)/=l; } // W1 / 2
 
     double dlugosc() const; //modul
 
@@ -45,7 +51,7 @@ class Wektor {
  * danych akceptuje. Jakie jest znaczenie parametrow itd.
  * Szczegoly dotyczace zalecen realizacji opisow mozna
  * znalezc w pliku:
- *    ~bk/edu/kpo/zalecenia.txt 
+ *    ~bk/edu/kpo/zalecenia.txt
  */
 std::istream& operator >> (std::istream &Strm, Wektor &Wek);
 
@@ -54,7 +60,7 @@ std::istream& operator >> (std::istream &Strm, Wektor &Wek);
  * danych akceptuje. Jakie jest znaczenie parametrow itd.
  * Szczegoly dotyczace zalecen realizacji opisow mozna
  * znalezc w pliku:
- *    ~bk/edu/kpo/zalecenia.txt 
+ *    ~bk/edu/kpo/zalecenia.txt
  */
 std::ostream& operator << (std::ostream &Strm, const Wektor &Wek);
 

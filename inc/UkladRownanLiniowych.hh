@@ -9,13 +9,17 @@
  *  i jakie ma glowne cechy.
  */
 class UkladRownanLiniowych {
-  /*
-   *  Tutaj trzeba wstawic definicje odpowiednich pol i metod prywatnych
-   */
-  public:
-  /*
-   *  Tutaj trzeba wstawic definicje odpowiednich metod publicznych
-   */    
+    Macierz A;
+    Wektor B;
+public:
+    UkladRownanLiniowych();
+    UkladRownanLiniowych(Macierz AA, Wektor BB);
+
+    Macierz zworc_macierz();
+    void zmien_macierz(Macierz MM);
+    /*analogicznie dla wektora */
+
+    Wektor oblicz();
 };
 
 
@@ -24,7 +28,7 @@ class UkladRownanLiniowych {
  * danych akceptuje. Jakie jest znaczenie parametrow itd.
  * Szczegoly dotyczace zalecen realizacji opisow mozna
  * znalezc w pliku:
- *    ~bk/edu/kpo/zalecenia.txt 
+ *    ~bk/edu/kpo/zalecenia.txt
  */
 std::istream& operator >> (std::istream &Strm, UkladRownanLiniowych &UklRown);
 
@@ -33,9 +37,9 @@ std::istream& operator >> (std::istream &Strm, UkladRownanLiniowych &UklRown);
  * danych akceptuje. Jakie jest znaczenie parametrow itd.
  * Szczegoly dotyczace zalecen realizacji opisow mozna
  * znalezc w pliku:
- *    ~bk/edu/kpo/zalecenia.txt 
+ *    ~bk/edu/kpo/zalecenia.txt
  */
-std::ostream& operator << ( std::ostream                  &Strm, 
+std::ostream& operator << ( std::ostream                  &Strm,
                             const UkladRownanLiniowych    &UklRown
                           );
 

@@ -17,15 +17,13 @@ int main()
 {
     //UkladRownanLiniowych   UklRown();   // To tylko przykladowe definicje zmiennej
 
-    Wektor W1;
-
-    W1[0]=14;
-
-    std::cout << std::endl << " Start programu " << W1[0] << std::endl << std::endl;
-    
-    std::cout << "Podaj wspolrzedne wektora: ";
-    std::cin >> W1
+    Wektor W1={2,2,0};
+    Wektor W2={2,2,0};
 
     std::cout << W1;
+
+
+
+    std::cout << (W1!=W2);
 
 }
