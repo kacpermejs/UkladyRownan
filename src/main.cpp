@@ -17,14 +17,14 @@ int main()
 {
     //UkladRownanLiniowych   UklRown();   // To tylko przykladowe definicje zmiennej
 
-    Wektor Wek1={1,2,3};
-    Wektor Wek2={4,5,6};
-    Wektor Wek3={7,8,9};
+    MacierzKw Mac1={{1,2,3},{4,5,6},{7,8,9}};
+    Wektor Wek2={2,2,2};
+    Wektor Wynik;
 
-    MacierzKw Mac1(Wek1 ,Wek2, Wek3);
+    std::cout << Mac1 <<std::endl << Wek2 << std::endl;
 
-    std::cout << Mac1 << std::endl;
+    Wynik=Mac1*Wek2;
 
-    std::cout << Mac1[0][1];
+    std::cout << Wynik;
 
 }

@@ -98,6 +98,6 @@ std::istream& operator >> (std::istream &Strm, Wektor &Wek)
 std::ostream& operator << (std::ostream &Strm, const Wektor &Wek)
 {
     for(int i=0; i<ROZMIAR; i++)
-        Strm << Wek[i] << "\t";
+        Strm << Wek[i] << "\n";
     return Strm;
 }
