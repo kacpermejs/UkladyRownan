@@ -72,7 +72,7 @@ bool Wektor::operator == (const Wektor & W2) const
 {
     for(int i=0; i<ROZMIAR; i++)
     {
-        if(this->Tab[i]!=W2.Tab[i])
+        if((this->Tab[i]+EPSILON)!=W2.Tab[i]||(this->Tab[i]-EPSILON)!=W2.Tab[i])
             return false;
     }
     return true;
@@ -80,12 +80,7 @@ bool Wektor::operator == (const Wektor & W2) const
 
 bool Wektor::operator != (const Wektor & W2) const
 {
-    for(int i=0; i<ROZMIAR; i++)
-    {
-        if(this->Tab[i]!=W2.Tab[i])
-            return true;
-    }
-    return false;
+    return !(*this==W2);
 }
 
 std::istream& operator >> (std::istream &Strm, Wektor &Wek)

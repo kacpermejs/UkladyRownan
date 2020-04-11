@@ -86,14 +86,14 @@ MacierzKw & MacierzKw::operator*=(double l)
         (*this)[i]*=l;
     return *this;
 }
-Wektor & MacierzKw::operator*(const Wektor & W2)
+Wektor MacierzKw::operator*(const Wektor & W2)
 {
     Wektor Wynik;
-    Wektor & refWynik=Wynik;
+
     for(int i=0; i<ROZMIAR; i++)
         for(int k=0; k<ROZMIAR; k++)
             Wynik[i]+=(*this)(i,k)*W2[i];
-    return refWynik;
+    return Wynik;
 }
 
 //================================================================================

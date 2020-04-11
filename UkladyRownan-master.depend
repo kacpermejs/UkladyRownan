@@ -1,11 +1,11 @@
 # depslib dependency file v1.0
-1586167966 source:/home/kmejs/Pulpit/Projekty/UkladyRownan/src/Macierz.cpp
+1586535102 source:/home/kmejs/Pulpit/Projekty/UkladyRownan/src/Macierz.cpp
 	"Macierz.hh"
 
 1520771284 source:/home/kmejs/Pulpit/Projekty/UkladyRownan/src/UkladRownanLiniowych.cpp
 	"UkladRownanLiniowych.hh"
 
-1586085552 source:/home/kmejs/Pulpit/Projekty/UkladyRownan/src/Wektor.cpp
+1586536153 source:/home/kmejs/Pulpit/Projekty/UkladyRownan/src/Wektor.cpp
 	"Wektor.hh"
 
 1586167592 source:/home/kmejs/Pulpit/Projekty/UkladyRownan/src/main.cpp

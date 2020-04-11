@@ -28,10 +28,10 @@ class Wektor {
 
     double operator * (const Wektor & W2) const; //skalarnie
 
-    inline const Wektor & operator + (const Wektor & W2) const { return Wektor(*this)+=W2; } //W1 + W2
-    inline const Wektor & operator - (const Wektor & W2) const { return Wektor(*this)-=W2; }
-    inline const Wektor & operator * (double l) const { return Wektor(*this)*=l; } // W1 * 2
-    inline const Wektor & operator / (double l) const { return Wektor(*this)/=l; } // W1 / 2
+    inline const Wektor operator + (const Wektor & W2) const { return Wektor(*this)+=W2; } //W1 + W2
+    inline const Wektor operator - (const Wektor & W2) const { return Wektor(*this)-=W2; }
+    inline const Wektor operator * (double l) const { return Wektor(*this)*=l; } // W1 * 2
+    inline const Wektor operator / (double l) const { return Wektor(*this)/=l; } // W1 / 2
 
     double dlugosc() const; //modul
 
@@ -41,8 +41,8 @@ class Wektor {
     //double zwroc_x();
     //void zmien_x(double nx);
 
-    inline const double & operator[] (int index) const { return this->Tab[index]; }
-    inline double & operator[] (int index) { assert(index>=0); return this->Tab[index]; }
+    inline const double & operator[] (int index) const { assert(index>=0 && index<ROZMIAR); return this->Tab[index]; }
+    inline double & operator[] (int index) { assert(index>=0 && index<ROZMIAR); return this->Tab[index]; }
 };
 
  inline Wektor operator *(double l, Wektor W2) { return Wektor(W2)*l; }

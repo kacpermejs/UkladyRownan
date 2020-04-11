@@ -41,12 +41,12 @@ public:
     MacierzKw & operator-=(const MacierzKw & M2);
     MacierzKw & operator*=(double l);
 
-    inline const MacierzKw & operator*(const MacierzKw & M2) { return MacierzKw(*this)*=M2; }
-    inline const MacierzKw & operator+(const MacierzKw & M2) { return MacierzKw(*this)+=M2; }
-    inline const MacierzKw & operator-(const MacierzKw & M2) { return MacierzKw(*this)-=M2; }
-    inline const MacierzKw & operator*(double l) { return MacierzKw(*this)*=l; }
+    inline const MacierzKw operator*(const MacierzKw & M2) { return MacierzKw(*this)*=M2; }
+    inline const MacierzKw operator+(const MacierzKw & M2) { return MacierzKw(*this)+=M2; }
+    inline const MacierzKw operator-(const MacierzKw & M2) { return MacierzKw(*this)-=M2; }
+    inline const MacierzKw operator*(double l) { return MacierzKw(*this)*=l; }
 
-    Wektor & operator*(const Wektor & W2);
+    Wektor operator*(const Wektor & W2);
 
     const Wektor & operator[] (int index) const { return this->Tab[index]; }
     Wektor & operator[] (int index) { assert(index>=0); return this->Tab[index]; }
