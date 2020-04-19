@@ -1,32 +1,28 @@
-#ifndef MACIERZ_CPP
-#define MACIERZ_CPP
-
-#include <cassert>
 #include "Macierz.hh"
 
-template<unsigned int Rozmiar>
-MacierzKw<Rozmiar>::MacierzKw()
+
+MacierzKw::MacierzKw()
 {
-    for(Wektor<Rozmiar> &ElemTab : Tab)
-        ElemTab=Wektor<Rozmiar>();
+    for(Wektor &ElemTab : Tab)
+        ElemTab=Wektor();
 }
-template<unsigned int Rozmiar>
-MacierzKw<Rozmiar>::MacierzKw(const Wektor<Rozmiar> tablica[])
+
+MacierzKw::MacierzKw(const Wektor tablica[])
 {
-    for(unsigned int i=0; i<Rozmiar; i++)
+    for(int i=0; i<ROZMIAR; i++)
         this->Tab[i]=tablica[i];
 }
-template<unsigned int Rozmiar>
-MacierzKw<Rozmiar>::MacierzKw(Wektor<Rozmiar> A, Wektor<Rozmiar> B, Wektor<Rozmiar> C)
+
+MacierzKw::MacierzKw(Wektor A, Wektor B, Wektor C)
 {
     this->Tab[0] = A;
     this->Tab[1] = B;
     this->Tab[2] = C;
 }
-template<unsigned int Rozmiar>
-double MacierzKw<Rozmiar>::wyznacznikSarrus() //tylko dla 3x3
+
+double MacierzKw::wyznacznikSarrus() //tylko dla 3x3
 {
-    assert(Rozmiar==3);
+    assert(ROZMIAR==3);
     double Wynik;
 
     return Wynik=(*this)(0,0) * (*this)(1,1) * (*this)(2,2)
@@ -40,39 +36,40 @@ double MacierzKw<Rozmiar>::wyznacznikSarrus() //tylko dla 3x3
 
 }
 
-template<unsigned int Rozmiar>
-double MacierzKw<Rozmiar>::wyznacznikLaplace()
+
+double MacierzKw::wyznacznikLaplace()
 {
-    return 0; //nie działa bo nie działa rekurencja Proba implementacji na dole w komentarzu
+    return 0; //nie działa bo nie działa rekurencja z szablonami.
+              //Proba implementacji na dole w komentarzu.
 }
 
-template<unsigned int Rozmiar>
-double MacierzKw<Rozmiar>::wyznacznikGauss()
+
+double MacierzKw::wyznacznikGauss()
 {
     double det = 1;
+    MacierzKw Temp=(*this);
+    for (int i = 0; i < ROZMIAR; ++i) {
 
-    for (unsigned int i = 0; i < Rozmiar; ++i) {
-
-        double pivotElement = (*this)[i][i];
-        unsigned int pivotRow = i;
-        for (unsigned int row = i + 1; row < Rozmiar; ++row) {
-            if (std::abs((*this)[row][i]) > std::abs(pivotElement)) {
-                pivotElement = (*this)[row][i];
-                pivotRow = row;
+        double Element = Temp[i][i];
+        int iloscZer = i;
+        for (int wiersz = i + 1; wiersz < ROZMIAR; ++wiersz) {
+            if (std::abs(Temp(wiersz,i)) > std::abs(Element)) {
+                Element = Temp[wiersz][i];
+                iloscZer = wiersz;
             }
         }
-        if (pivotElement == 0.0) {
-            return 0.0;
+        if (Element == 0) {
+            return 0;
         }
-        if (pivotRow != i) {
-            std::swap((*this)[i],(*this)[pivotRow]);
-            det *= -1.0;
+        if (iloscZer != i) {
+            std::swap(Temp[i],Temp[iloscZer]); //zamiana wierszy
+            det *= -1;
         }
-        det *= pivotElement;
+        det *= Element;
 
-        for (unsigned int row = i + 1; row < Rozmiar; ++row) {
-            for (unsigned int col = i + 1; col < Rozmiar; ++col) {
-                (*this)[row][col] -= (*this)[row][i] * (*this)[i][col] / pivotElement;
+        for (int wiersz = i + 1; wiersz < ROZMIAR; ++wiersz) {
+            for (int kolumna = i + 1; kolumna < ROZMIAR; ++kolumna) {
+                Temp[wiersz][kolumna] -= Temp[wiersz][i] * Temp[i][kolumna] / Element;
             }
         }
     }
@@ -80,8 +77,8 @@ double MacierzKw<Rozmiar>::wyznacznikGauss()
     return det;
 }
 
-template<unsigned int Rozmiar>
-double MacierzKw<Rozmiar>::wyznacznik(metoda met)
+
+double MacierzKw::wyznacznik(metoda met)
 {
     switch(met)
     {
@@ -108,82 +105,92 @@ double MacierzKw<Rozmiar>::wyznacznik(metoda met)
     }
 }
 
-template<unsigned int Rozmiar>
-const MacierzKw<Rozmiar> MacierzKw<Rozmiar>::transponowana() const
+
+const MacierzKw MacierzKw::transponowana() const
 {
-    MacierzKw<Rozmiar> Temp=(*this);
+    MacierzKw Temp=(*this);
 
     Temp.transponuj();
 
     return Temp;
 }
 
-template<unsigned int Rozmiar>
-void MacierzKw<Rozmiar>::transponuj()
-{
-    MacierzKw<Rozmiar> Temp=(*this);
 
-    for(unsigned int i=0; i<Rozmiar; i++)
-        for(unsigned int j=0; j<Rozmiar; j++)
+void MacierzKw::transponuj()
+{
+    MacierzKw Temp=(*this);
+
+    for(int i=0; i<ROZMIAR; i++)
+        for(int j=0; j<ROZMIAR; j++)
             (*this)(j,i)=Temp(i,j);
 
 }
 
-template<unsigned int Rozmiar>
-MacierzKw<Rozmiar> & MacierzKw<Rozmiar>::operator*=(const MacierzKw<Rozmiar> & M2)
+
+MacierzKw & MacierzKw::operator*=(const MacierzKw & M2)
 {
-    MacierzKw<Rozmiar> Temp;
-    for(unsigned int i=0; i<Rozmiar; i++)
-        for(unsigned int j=0; j<Rozmiar; j++)
-            for(unsigned int k=0; k<Rozmiar; k++)
+    MacierzKw Temp;
+    for(int i=0; i<ROZMIAR; i++)
+        for(int j=0; j<ROZMIAR; j++)
+            for(int k=0; k<ROZMIAR; k++)
                 Temp(i,j)+=(*this)(i,k)*M2(k,j);
     *this=Temp;
     return *this;
 }
 
-template<unsigned int Rozmiar>
-MacierzKw<Rozmiar> & MacierzKw<Rozmiar>::operator+=(const MacierzKw<Rozmiar> & M2)
+
+MacierzKw & MacierzKw::operator+=(const MacierzKw & M2)
 {
-    for(unsigned int i=0; i<Rozmiar; i++)
+    for(int i=0; i<ROZMIAR; i++)
         (*this)[i]+=M2[i];
     return *this;
 }
 
-template<unsigned int Rozmiar>
-MacierzKw<Rozmiar> & MacierzKw<Rozmiar>::operator-=(const MacierzKw<Rozmiar> & M2)
+
+MacierzKw & MacierzKw::operator-=(const MacierzKw & M2)
 {
-    for(unsigned int i=0; i<Rozmiar; i++)
+    for(int i=0; i<ROZMIAR; i++)
         (*this)[i]-=M2[i];
     return *this;
 }
 
-template<unsigned int Rozmiar>
-MacierzKw<Rozmiar> & MacierzKw<Rozmiar>::operator*=(double l)
+
+MacierzKw & MacierzKw::operator*=(double l)
 {
-    for(unsigned int i=0; i<Rozmiar; i++)
+    for(int i=0; i<ROZMIAR; i++)
         (*this)[i]*=l;
     return *this;
 }
 
-template<unsigned int Rozmiar>
-Wektor<Rozmiar> MacierzKw<Rozmiar>::operator*(const Wektor<Rozmiar> & W2)
-{
-    Wektor<Rozmiar> Wynik;
 
-    for(unsigned int i=0; i<Rozmiar; i++)
-        for(unsigned int k=0; k<Rozmiar; k++)
-            Wynik[i]+=(*this)(i,k)*W2[i];
+const Wektor MacierzKw::zwrocWiersz(int index) const
+{
+    assert(index>=0 && index<ROZMIAR);
+    Wektor Wynik;
+    for(int kol=0; kol<ROZMIAR; kol++)
+        Wynik[kol]=this->Tab[kol][index];
     return Wynik;
 }
 
 //================================================================================
 
-template<unsigned int Rozmiar>
-std::istream& operator >> (std::istream &Strm, MacierzKw<Rozmiar> &Mac)
+Wektor operator*(const MacierzKw & M1, const Wektor & W2)
 {
-    for(unsigned int i=0; i<Rozmiar; i++)
+    Wektor Wynik;
+
+    for(int i=0; i<ROZMIAR; i++)
+        for(int k=0; k<ROZMIAR; k++)
+        {
+            Wynik[i]+=M1(i,k)*W2[k];
+        }
+    return Wynik;
+}
+
+std::istream& operator >> (std::istream &Strm, MacierzKw &Mac)
+{
+    for(int i=0; i<ROZMIAR; i++)
     {
-        for(unsigned int j=0; j<Rozmiar; j++)
+        for(int j=0; j<ROZMIAR; j++)
         {
             Strm >> Mac[j][i];
         }
@@ -191,12 +198,12 @@ std::istream& operator >> (std::istream &Strm, MacierzKw<Rozmiar> &Mac)
     return Strm;
 }
 
-template<unsigned int Rozmiar>
-std::ostream& operator << (std::ostream &Strm, const MacierzKw<Rozmiar> &Mac)
+
+std::ostream& operator << (std::ostream &Strm, const MacierzKw &Mac)
 {
-    for(unsigned int i=0; i<Rozmiar; i++)
+    for(int i=0; i<ROZMIAR; i++)
     {
-        for(unsigned int j=0; j<Rozmiar; j++)
+        for(int j=0; j<ROZMIAR; j++)
         {
             Strm << Mac[j][i] << "\t";
         }
@@ -205,36 +212,36 @@ std::ostream& operator << (std::ostream &Strm, const MacierzKw<Rozmiar> &Mac)
     return Strm;
 }
 
-#endif // MACIERZ_CPP
+
 /*
 
-template<unsigned int Rozmiar>
-double MacierzKw<Rozmiar>::wyznacznikLaplace()
+
+double MacierzKw::wyznacznikLaplace()
 {
     double Wynik=0;
     double m=1;
-    unsigned int k;
+    int k;
 
-    if(Rozmiar>6)
+    if(ROZMIAR>6)
     {
         std::cerr << "Nie obslugiwana wielkosc" << std::endl;
         return 0;
     }
 
-    MacierzKw<Rozmiar-1> Temp;
+    MacierzKw<ROZMIAR-1> Temp;
 
-    if(Rozmiar==1)
+    if(ROZMIAR==1)
         return (*this)(0,0);
-    else if(Rozmiar>=2)
+    else if(ROZMIAR>=2)
     {
 
-        for(unsigned int i=0; i<Rozmiar; ++i)
+        for(int i=0; i<ROZMIAR; ++i)
         {
             k=0;
-            for(unsigned int j=0; j<(Rozmiar-1); ++j)
+            for(int j=0; j<(ROZMIAR-1); ++j)
             {
                 if(k==i) k++;
-                for(unsigned int l=0; l<(Rozmiar-1); ++l)
+                for(int l=0; l<(ROZMIAR-1); ++l)
                     Temp(l,j)=(*this)(l,k++);
             }
 

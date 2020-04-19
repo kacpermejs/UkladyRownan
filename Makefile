@@ -1,10 +1,10 @@
 #
 #  To sa opcje dla kompilacji
 #
-CPPFLAGS= -c -g -Iinc -Wall -pedantic -I./src
+CPPFLAGS= -c -g -Iinc -Wall -pedantic 
 
 __start__: uklad_rownan
-	./uklad_rownan
+	./uklad_rownan < rownania.dat
 
 uklad_rownan: obj/main.o obj/UkladRownanLiniowych.o obj/Macierz.o obj/Wektor.o
 	g++ -Wall -pedantic -o  uklad_rownan obj/main.o obj/Wektor.o\

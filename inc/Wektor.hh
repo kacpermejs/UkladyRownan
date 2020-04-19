@@ -4,16 +4,17 @@
 #include <iostream>
 #include <cassert>
 #include <cmath>
+#include "rozmiar.h"
 
 
 /*
  *  Tutaj trzeba opisac klase. Jakie pojecie modeluje ta klasa
  *  i jakie ma glowne cechy.
  */
-template<unsigned int Rozmiar>
+
 class Wektor {
 
-    double Tab[Rozmiar]; //4 tablica statyczna
+    double Tab[ROZMIAR]; //4 tablica statyczna
 
     public:
 
@@ -37,42 +38,25 @@ class Wektor {
 
     bool operator == (const Wektor & W2) const;
     bool operator != (const Wektor & W2) const;
-    //1 propozycja, x, y, z
-    //double zwroc_x();
-    //void zmien_x(double nx);
 
-    inline const double & operator[] (unsigned int index) const { assert(index<Rozmiar); return this->Tab[index]; }
-    inline double & operator[] (unsigned int index) { assert( index<Rozmiar); return this->Tab[index]; }
+    inline const double & operator[] (int index) const { assert(index>=0 && index<ROZMIAR); return this->Tab[index]; }
+    inline double & operator[] (int index) { assert(index>=0 && index<ROZMIAR); return this->Tab[index]; }
 };
-template <unsigned int Rozmiar>
-inline Wektor<Rozmiar> operator *(double l, Wektor<Rozmiar> W2) { return Wektor<Rozmiar>(W2)*l; }
-/*
- * To przeciazenie trzeba opisac. Co ono robi. Jaki format
- * danych akceptuje. Jakie jest znaczenie parametrow itd.
- * Szczegoly dotyczace zalecen realizacji opisow mozna
- * znalezc w pliku:
- *    ~bk/edu/kpo/zalecenia.txt
+inline Wektor operator *(double l, Wektor W2) { return Wektor(W2)*l; }
+/*!
+ * Funkcja do wczytywania obiektu klasy Wektor ze strumienia
+ * Strm - strumien wyjsciowy
+ * Wek - wczytywany uklad (referencja)
  */
-template <unsigned int Rozmiar>
-std::istream& operator >> (std::istream &Strm, Wektor<Rozmiar> &Wek);
 
-/*
- * To przeciazenie trzeba opisac. Co ono robi. Jaki format
- * danych akceptuje. Jakie jest znaczenie parametrow itd.
- * Szczegoly dotyczace zalecen realizacji opisow mozna
- * znalezc w pliku:
- *    ~bk/edu/kpo/zalecenia.txt
+std::istream& operator >> (std::istream &Strm, Wektor &Wek);
+
+/*!
+ * Funkcja do wysylania obiektu klasy Wektor do strumienia
+ * Strm - strumien wyjsciowy
+ * Wek - wysylany uklad (referencja)
  */
-template <unsigned int Rozmiar>
-std::ostream& operator << (std::ostream &Strm, const Wektor<Rozmiar> &Wek);
-/*
-template class Wektor<1>;
-template class Wektor<2>;
-template class Wektor<3>;
-template class Wektor<4>;
-template class Wektor<5>;
-template class Wektor<6>;*/
 
-#include "Wektor.cpp"
+std::ostream& operator << (std::ostream &Strm, const Wektor &Wek);
 
 #endif

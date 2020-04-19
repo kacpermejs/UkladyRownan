@@ -1,52 +1,81 @@
-#ifndef UKLADROWNANLINIOWYCH_CPP
-#define UKLADROWNANLINIOWYCH_CPP
-
 #include "UkladRownanLiniowych.hh"
 
-template <unsigned int Rozmiar>
-UkladRownanLiniowych<Rozmiar>::UkladRownanLiniowych(MacierzKw<Rozmiar> AA, Wektor<Rozmiar> BB)
+UkladRownanLiniowych::UkladRownanLiniowych()
+{
+    MacierzKw AA;
+    Wektor BB;
+
+    this->A=AA;
+    this->B=BB;
+}
+
+UkladRownanLiniowych::UkladRownanLiniowych(MacierzKw AA, Wektor BB)
 {
     this->A=AA;
     this->B=BB;
 }
 
-template <unsigned int Rozmiar>
-Wektor<Rozmiar> UkladRownanLiniowych<Rozmiar>::oblicz()
-{
-    Wektor<Rozmiar> Wynik;
 
-    MacierzKw<Rozmiar> Temp=this->A;
+Wektor UkladRownanLiniowych::oblicz()
+{
+    Wektor Wynik;
+    Wektor WektorZerowy;
+
+    MacierzKw Temp=this->A;
 
     double det=this->A.wyznacznik(GAUSS);
-    double detx[Rozmiar];
+    Wektor detx;
 
-    if(det+EPSILON!=0 && det+EPSILON!=0)
+    for(int i=0; i<ROZMIAR; i++)
     {
-        for(unsigned int i=0; i<Rozmiar; i++)
-        {
-            Temp[i]=this->B;
-            detx[i]=Temp.wyznacznik(GAUSS);
-            Wynik[i]=detx/det;
-        }
+        Temp=this->A;
+        Temp[i]=this->B;
+        detx[i]=Temp.wyznacznik(GAUSS);
+
+        Wynik[i]=detx[i]/det;
     }
+
+    if(detx==WektorZerowy && (det+EPSILON==0 || det+EPSILON==0))
+        std::cout << "Uklad ma nieskonczenie wiele rozwiazan!\n";
+    else if(detx!=WektorZerowy && (det+EPSILON==0 || det+EPSILON==0))
+        std::cout << "Uklad jest sprzeczny\n";
+
+
+
     return Wynik;
 }
 
 
-template <unsigned int Rozmiar>
-std::istream& operator >> (std::istream &Strm, UkladRownanLiniowych<Rozmiar> &UklRown)
+
+std::istream& operator >> (std::istream &Strm, UkladRownanLiniowych &UklRown)
 {
-    Strm >> UklRown->macierz() >> UklRown->wektor();
+    Strm >> UklRown.zwroc_macierz() >> UklRown.zwroc_wektor();
+
     return Strm;
 }
 
-template <unsigned int Rozmiar>
+
 std::ostream& operator << ( std::ostream                  &Strm,
-                            const UkladRownanLiniowych<Rozmiar>    &UklRown
+                            const UkladRownanLiniowych    &UklRown
                           )
 {
-    Strm << UklRown->macierz() << std::endl << UklRown->wektor() << std::endl;
+    char znakRownosci;
+
+    MacierzKw Mac1=UklRown.macierz();
+
+
+    for(int i=0; i<ROZMIAR; i++)
+    {
+
+        if(i==ROZMIAR/2)
+            znakRownosci='=';
+        else
+            znakRownosci=' ';
+        Strm << "|" << Mac1.zwrocWiersz(i) << "||" << "x" << i+1 << "|"
+             << znakRownosci
+             << "|" << UklRown.wektor()[i] << "|" << std::endl;
+
+    }
+
     return Strm;
 }
-
-#endif

@@ -5,55 +5,45 @@
 #include <utility>
 #include "Wektor.hh"
 #include "Macierz.hh"
-#include "rozmiar.h"
 
-
-/*
- *  Tutaj trzeba opisac klase. Jakie pojecie modeluje ta klasa
- *  i jakie ma glowne cechy.
- */
-template<unsigned int Rozmiar>
 class UkladRownanLiniowych {
-    MacierzKw<Rozmiar> A;
-    Wektor<Rozmiar> B;
+    MacierzKw A;
+    Wektor B;
 public:
     UkladRownanLiniowych();
-    UkladRownanLiniowych(MacierzKw<Rozmiar> AA, Wektor<Rozmiar> BB);
+    UkladRownanLiniowych(MacierzKw AA, Wektor BB);
 
-    MacierzKw<Rozmiar> & zworc_macierz() { return this->A; }
-    const MacierzKw<Rozmiar> & zworc_macierz() const { return this->A; }
-    void zmien_macierz(MacierzKw<Rozmiar> MM) { this->A=MM; }
+    MacierzKw & zwroc_macierz() { return this->A; }
+    const MacierzKw & macierz() const { return this->A; }
+    void zmien_macierz(MacierzKw MM) { this->A=MM; }
     /*analogicznie dla wektora */
-    Wektor<Rozmiar> & zwroc_wektor() { return this->B; }
-    const Wektor<Rozmiar> & zwroc_wektor() const { return this->B; }
-    void Zmien_wektor(Wektor<Rozmiar> WW) { this->B=WW; }
+    Wektor & zwroc_wektor() { return this->B; }
+    const Wektor & wektor() const { return this->B; }
+    void zmien_wektor(Wektor WW) { this->B=WW; }
 
-    Wektor<Rozmiar> oblicz();
+/*!
+ * Metoda do obliczania ukladu rownan metoda Cramera
+ */
+    Wektor oblicz();
 };
 
 
-/*
- * To przeciazenie trzeba opisac. Co ono robi. Jaki format
- * danych akceptuje. Jakie jest znaczenie parametrow itd.
- * Szczegoly dotyczace zalecen realizacji opisow mozna
- * znalezc w pliku:
- *    ~bk/edu/kpo/zalecenia.txt
+/*!
+ * Funkcja do wczytywania obiektu klasy UkladRownanLiniowych ze strumienia
+ * Strm - strumien wyjsciowy
+ * UklRown - wysylany uklad (referencja)
  */
-template<unsigned int Rozmiar>
-std::istream& operator >> (std::istream &Strm, UkladRownanLiniowych<Rozmiar> &UklRown);
 
-/*
- * To przeciazenie trzeba opisac. Co ono robi. Jaki format
- * danych akceptuje. Jakie jest znaczenie parametrow itd.
- * Szczegoly dotyczace zalecen realizacji opisow mozna
- * znalezc w pliku:
- *    ~bk/edu/kpo/zalecenia.txt
+std::istream& operator >> (std::istream &Strm, UkladRownanLiniowych &UklRown);
+
+/*!
+ * Funkcja do wysylania obiektu klasy UkladRownanLiniowych do strumienia
+ * Strm - strumien wyjsciowy
+ * UklRown - wysylany uklad (referencja)
  */
-template<unsigned int Rozmiar>
+
 std::ostream& operator << ( std::ostream                  &Strm,
-                            const UkladRownanLiniowych<Rozmiar>    &UklRown
+                            const UkladRownanLiniowych    &UklRown
                           );
-
-#include "UkladRownanLiniowych.cpp"
 
 #endif

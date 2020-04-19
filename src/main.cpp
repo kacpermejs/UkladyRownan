@@ -21,11 +21,28 @@ int main()
 {
 using namespace std;
 
-    UkladRownanLiniowych<ROZMIAR>   UklRown();   // To tylko przykladowe definicje zmiennej
+    UkladRownanLiniowych   UklRown;   // To tylko przykladowe definicje zmiennej
+    Wektor WekRozwiazan;
+    Wektor WekBledow;
+    MacierzKw MacUkladu;
 
-    MacierzKw<ROZMIAR> Mac1;
-    Wektor<ROZMIAR> Wek1;
-    UklRown.zmien_macierz(Mac1);
+    cin >> UklRown;
+    UklRown.zwroc_macierz().transponuj();
+    cout << UklRown;
+    MacUkladu=UklRown.macierz();
+    WekRozwiazan=UklRown.oblicz();
+    WekBledow=MacUkladu*WekRozwiazan-UklRown.wektor();
+
+    cout << "Wynik: (x1, x2,x3)\n"
+    << WekRozwiazan << endl;
+
+    cout << "Wektor bledu:\n"
+    << WekBledow << endl;
+
+    cout << "Dlugosc wektora bledu:\n"
+    << WekBledow.dlugosc() << endl;
+
+
 
 }
 
