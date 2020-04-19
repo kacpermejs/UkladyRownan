@@ -1,7 +1,11 @@
 #include <iostream>
+#include <fstream>
 #include "Wektor.hh"
 #include "Macierz.hh"
 #include "UkladRownanLiniowych.hh"
+#include "rozmiar.h"
+
+
 
 
 
@@ -15,16 +19,16 @@
 
 int main()
 {
-    //UkladRownanLiniowych   UklRown();   // To tylko przykladowe definicje zmiennej
+using namespace std;
 
-    MacierzKw Mac1={{1,2,3},{4,5,6},{7,8,9}};
-    Wektor Wek2={2,2,2};
-    Wektor Wynik;
+    UkladRownanLiniowych<ROZMIAR>   UklRown();   // To tylko przykladowe definicje zmiennej
 
-    std::cout << Mac1 <<std::endl << Wek2 << std::endl;
-
-    Wynik=Mac1*Wek2;
-
-    std::cout << Wynik;
+    MacierzKw<ROZMIAR> Mac1;
+    Wektor<ROZMIAR> Wek1;
+    UklRown.zmien_macierz(Mac1);
 
 }
+
+
+
+

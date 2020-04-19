@@ -14,3 +14,36 @@
 	"Macierz.hh"
 	"UkladRownanLiniowych.hh"
 
+1587247180 source:/home/kmejs/Projekty/UkladyRownan/src/Macierz.cpp
+	<cassert>
+	"Macierz.hh"
+
+1587248521 source:/home/kmejs/Projekty/UkladyRownan/src/main.cpp
+	<iostream>
+	<fstream>
+	"Wektor.hh"
+	"Macierz.hh"
+	"UkladRownanLiniowych.hh"
+	"rozmiar.h"
+	"Wektor.cpp"
+	"Macierz.cpp"
+	"UkladRownanLiniowych.cpp"
+
+1587249628 source:/home/kmejs/Projekty/UkladyRownan/src/UkladRownanLiniowych.cpp
+	"UkladRownanLiniowych.hh"
+
+1587248418 source:/home/kmejs/Projekty/UkladyRownan/src/Wektor.cpp
+	"Wektor.hh"
+	"rozmiar.h"
+
+1587248418 /home/kmejs/Projekty/UkladyRownan/src/Wektor.cpp
+	"Wektor.hh"
+	"rozmiar.h"
+
+1587247180 /home/kmejs/Projekty/UkladyRownan/src/Macierz.cpp
+	<cassert>
+	"Macierz.hh"
+
+1587247295 /home/kmejs/Projekty/UkladyRownan/src/UkladRownanLiniowych.cpp
+	"UkladRownanLiniowych.hh"
+

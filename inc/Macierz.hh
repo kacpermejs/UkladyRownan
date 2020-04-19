@@ -1,10 +1,10 @@
 #ifndef MACIERZ_HH
 #define MACIERZ_HH
 
-#include "rozmiar.h"
 #include "Wektor.hh"
 #include <iostream>
 #include <cmath>
+#include <utility>
 
 enum metoda
 {
@@ -16,21 +16,21 @@ SARRUS
  *  Tutaj trzeba opisac klase. Jakie pojecie modeluje ta klasa
  *  i jakie ma glowne cechy.
  */
+
+template<unsigned int Rozmiar>
 class MacierzKw {
-    Wektor Tab[ROZMIAR]; //2. propozycja, zalecana
+    Wektor<Rozmiar> Tab[Rozmiar]; //2. propozycja, zalecana
 public:
     MacierzKw();
-    MacierzKw(const Wektor Tab[]);
-    MacierzKw(Wektor A, Wektor B, Wektor C);
+    MacierzKw(const Wektor<Rozmiar> Tab[]);
+    MacierzKw(Wektor<Rozmiar> A, Wektor<Rozmiar> B, Wektor<Rozmiar> C);
 
     double wyznacznikLaplace();// rozwiniecje laplace'a, gaussa, sarrusa
     double wyznacznikGauss();
     double wyznacznikSarrus();
     double wyznacznik(metoda met);
 
-    int rzad();
-
-    const MacierzKw & transponowana() const;
+    const MacierzKw transponowana() const;
     void transponuj();
 
     const MacierzKw & odwroc() const;
@@ -46,12 +46,12 @@ public:
     inline const MacierzKw operator-(const MacierzKw & M2) { return MacierzKw(*this)-=M2; }
     inline const MacierzKw operator*(double l) { return MacierzKw(*this)*=l; }
 
-    Wektor operator*(const Wektor & W2);
+    Wektor<Rozmiar> operator*(const Wektor<Rozmiar> & W2);
 
-    const Wektor & operator[] (int index) const { return this->Tab[index]; }
-    Wektor & operator[] (int index) { assert(index>=0); return this->Tab[index]; }
-    const double & operator() (int ind1, int ind2) const {return this->Tab[ind2][ind1]; }
-    double & operator() (int ind1, int ind2) { assert(ind1>=0 && ind2>=0); return this->Tab[ind2][ind1]; }
+    const Wektor<Rozmiar> & operator[] (unsigned int index) const { assert(index>=0 && index<Rozmiar); return this->Tab[index]; }
+    Wektor<Rozmiar> & operator[] (unsigned int index) { assert(index>=0 && index<Rozmiar); return this->Tab[index]; }
+    const double & operator() (unsigned int ind1, unsigned int ind2) const { return this->Tab[ind2][ind1]; }
+    double & operator() (unsigned int ind1, unsigned int ind2) { return this->Tab[ind2][ind1]; }
 
 };
 
@@ -63,7 +63,8 @@ public:
  * znalezc w pliku:
  *    ~bk/edu/kpo/zalecenia.txt
  */
-std::istream& operator >> (std::istream &Strm, MacierzKw &Mac);
+template<unsigned int Rozmiar>
+std::istream& operator >> (std::istream &Strm, MacierzKw<Rozmiar> &Mac);
 
 /*
  * To przeciazenie trzeba opisac. Co ono robi. Jaki format
@@ -72,7 +73,16 @@ std::istream& operator >> (std::istream &Strm, MacierzKw &Mac);
  * znalezc w pliku:
  *    ~bk/edu/kpo/zalecenia.txt
  */
-std::ostream& operator << (std::ostream &Strm, const MacierzKw &Mac);
+template<unsigned int Rozmiar>
+std::ostream& operator << (std::ostream &Strm, const MacierzKw<Rozmiar> &Mac);
 
+template class MacierzKw<1>;
+template class MacierzKw<2>;
+template class MacierzKw<3>;
+template class MacierzKw<4>;
+template class MacierzKw<5>;
+template class MacierzKw<6>;
+
+#include "Macierz.cpp"
 
 #endif
